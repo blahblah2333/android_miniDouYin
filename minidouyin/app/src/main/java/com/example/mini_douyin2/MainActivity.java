@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.mini_douyin2.utils.Utils;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -34,6 +36,12 @@ import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity {
+    private String[] permissions = new String[] {
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO
+    };
+
     private String[] PermissionsArray = new String[]{CAMERA,WRITE_EXTERNAL_STORAGE,RECORD_AUDIO,INTERNET};
     private int[] grantResults = new int[]{};
     private static final int REQUEST_VIDEO_CAPTURE = 1;
@@ -79,7 +87,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         findViewById(R.id.bt_camera).setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, RecordVideoActivity.class));
+            //startActivity(new Intent(MainActivity.this, RecordVideoActivity.class));
+            if (Utils.isPermissionsReady(this, permissions)) {
+                //startActivity(new Intent(MainActivity.this, CustomCameraActivity.class));
+            } else {
+                Utils.reuqestPermissions(this, permissions, 101);
+                //startActivity(new Intent(MainActivity.this, CustomCameraActivity.class));
+            }
+            startActivity(new Intent(MainActivity.this, CustomCameraActivity.class));
         });
         findViewById(R.id.bt_upload).setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, UploadActivity.class));

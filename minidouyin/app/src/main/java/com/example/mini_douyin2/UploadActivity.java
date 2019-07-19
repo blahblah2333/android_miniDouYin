@@ -22,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 
+import okhttp3.MultipartBody;
+
 public class UploadActivity extends AppCompatActivity {
 
     private SurfaceView surfaceView;
@@ -29,6 +31,7 @@ public class UploadActivity extends AppCompatActivity {
     private ImageButton button_resume;
     private ImageButton button_pause;
     private ImageButton button_camera;
+    private ImageButton button_upload;
     private ImageButton button_DCIM;
     private SeekBar seekBar;
     private Camera camera;
@@ -37,6 +40,13 @@ public class UploadActivity extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;
     private Uri uri;
+
+    public Uri mSelectedImage;
+    private Uri mSelectedVideo;
+    private MultipartBody.Part image;
+    private MultipartBody.Part video;
+    private String student_id;
+    private String student_name;
 
     private SurfaceHolder holder;
     private boolean stop_runnable=false;
@@ -50,13 +60,13 @@ public class UploadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload);
 
 
-
-
         button_pause = findViewById(R.id.pause_button);
         button_DCIM = findViewById(R.id.dcim_button);
         button_resume = findViewById(R.id.resume_button);
+        button_upload = findViewById(R.id.upload_button);
         seekBar = findViewById(R.id.seekBar);
 
+        //mSelectedVideo = Uri.fromFile(new File())
 
         button_resume.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +79,14 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
+            }
+        });
+
+        button_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                video = getMultipartFromUri("video", mSelectedVideo);
+//                postVideo();
             }
         });
 
@@ -149,8 +167,6 @@ public class UploadActivity extends AppCompatActivity {
         handler.post(runnable);
 
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

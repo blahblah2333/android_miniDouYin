@@ -12,11 +12,13 @@ import retrofit2.http.Query;
 public interface MinidouyinService {
     String HOST = "http://test.androidcamp.bytedance.com/";
     @Multipart
-    @POST("/mini_douyin/invoke/video") ///mini_douyin/invoke/video
+    @POST("/mini_douyin/invoke/video")
     Call<PostVideoResponse> createVideo(
             @Query("student_id") String studentId,
             @Query("user_name") String userName,
-            @Part MultipartBody.Part image, @Part MultipartBody.Part video);
+            @Part MultipartBody.Part image,
+            @Part MultipartBody.Part video
+    );
 
     @GET("/mini_douyin/invoke/video")
     Call<FeedResponse> fetchFeed();
